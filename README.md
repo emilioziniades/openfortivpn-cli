@@ -20,6 +20,8 @@ To test it out, you can run the following
 nix run github:emilioziniades/openfortivpn-cli
 ```
 
+TODO: explain full installation with home-manager.
+
 ## Configuration
 
 You will need to create a configuration file at ~/.vpn. This is a JSON

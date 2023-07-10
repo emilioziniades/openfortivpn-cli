@@ -1,9 +1,13 @@
 {
   description = "A flake shell script to glue together `openfortivpn` and `openfortivpn-webview`";
 
-  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-  inputs.flake-utils.url = github:numtide/flake-utils;
-  inputs.openfortivpn-webview.url = github:emilioziniades/openfortivpn-webview-flake;
+  inputs = {
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    flake-utils.url = github:numtide/flake-utils;
+    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
+    openfortivpn-webview.url = github:emilioziniades/openfortivpn-webview-flake;
+    openfortivpn-webview.inputs.nixpkgs.follows = "nixpkgs";
+  };
 
   outputs = {
     self,

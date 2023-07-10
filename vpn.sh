@@ -22,7 +22,7 @@ main() {
         logs)
             logs;;
         *)
-            echo "please specify a valid subcommand: up {vpn-name}, down, status, install"
+            echo "please specify a valid subcommand: up {vpn-name}, down, status"
     esac
 }
 
