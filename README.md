@@ -20,7 +20,38 @@ To test it out, you can run the following
 nix run github:emilioziniades/openfortivpn-cli
 ```
 
-TODO: explain full installation with home-manager.
+To install with home-manager + nix flake, add the following to your flake inputs.
+
+```
+inputs.openfortivpn-cli.url = github:emilioziniades/openfortivpn-cli;
+inputs.openfortivpn-cli.inputs.nixpkgs.follows = "nixpkgs";
+```
+
+Then, update the call to the home-manager configuration in the flake outputs in order to pass the script into the home-manager configuration using extraSpecialArgs. The below example is on NixOS but it should be similar on other platforms.
+
+```
+...
+home-manager.nixosModules.home-manager
+{
+  ...
+  home-manager.extraSpecialArgs = {
+    ...
+    openfortivpn-cli = openfortivpn-cli.defaultPackage.x86_64-linux;
+  };
+}
+```
+
+Finally, add the script to the list of packages in your home-manager configuration.
+
+```
+home.packages = [
+    ...
+    openfortivpn-cli
+    ...
+];
+```
+
+Then rebuild your configuration, with e.g. `nixos-rebuild switch`, and confirm that the script is in your path by typing `vpn`.
 
 ## Configuration
 
