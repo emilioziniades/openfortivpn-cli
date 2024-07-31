@@ -34,9 +34,11 @@ up() {
             echo "connecting to default vpn"
             host=$(jq -e -c 'map(select(.default == true)) | "\(.[0].host):\(.[0].port)"' $VPN_CFG_FILE | tr -d '"')
             name=$(jq -e -c 'map(select(.default == true)) | .[0].name' $VPN_CFG_FILE | tr -d '"')
+            cert=$(jq -e -c 'map(select(.default == true)) | .[0].cert' $VPN_CFG_FILE | tr -d '"')
         else
             host=$(jq -e -c "map(select(.name == \"$1\")) | \"\(.[0].host):\(.[0].port)\"" $VPN_CFG_FILE | tr -d '"')
             name=$(jq -e -c "map(select(.name == \"$1\")) | .[0].name" $VPN_CFG_FILE | tr -d '"')
+            cert=$(jq -e -c "map(select(.name == \"$1\")) | .[0].cert" $VPN_CFG_FILE | tr -d '"')
             if [[ $? == 1 ]]
             then
                 echo "could not find host $1, check the ~/.vpn config file"
@@ -46,7 +48,11 @@ up() {
         echo "connecting to $name"
         echo $name > $VPN_NAME_FILE
         COOKIE=$(openfortivpn-webview $host)
-        sudo -b openfortivpn --cookie=$COOKIE $host
+        if [ $cert = "null" ]; then
+          sudo -b openfortivpn --cookie=$COOKIE $host
+        else
+          sudo -b openfortivpn --cookie=$COOKIE $host --trusted-cert $cert
+        fi
     else
         echo "vpn already connected"
     fi
