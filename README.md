@@ -71,7 +71,8 @@ configuration file looks like this:
         "name": "less-favourite-vpn",
         "host": "two.vpn.com",
         "port": 10443,
-        "default": false
+        "default": false,
+        "cert": "hash of cert"
     }
 ]
 ```
