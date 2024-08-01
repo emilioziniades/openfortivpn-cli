@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.nixpkgs.follows = "nixpkgs";
     openfortivpn-webview.url = "github:emilioziniades/openfortivpn-webview-flake";
     openfortivpn-webview.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -32,7 +31,7 @@
           }
         );
       in rec {
-        defaultPackage = packages.script;
+        packages.default = packages.script;
         packages.script = pkgs.symlinkJoin {
           name = name;
           paths = [script] ++ buildInputs;
