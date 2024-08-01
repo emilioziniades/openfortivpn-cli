@@ -4,15 +4,12 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    openfortivpn-webview.url = "github:emilioziniades/openfortivpn-webview-flake";
-    openfortivpn-webview.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
     self,
     nixpkgs,
     flake-utils,
-    openfortivpn-webview,
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
@@ -21,7 +18,7 @@
         buildInputs = with pkgs; [
           jq
           openfortivpn
-          openfortivpn-webview.packages.${system}.openfortivpn-webview
+          self.packages.${system}.openfortivpn-webview
         ];
         script = (pkgs.writeScriptBin name (builtins.readFile ./vpn.sh)).overrideAttrs (
           old: {
@@ -36,6 +33,7 @@
           buildInputs = [pkgs.makeWrapper];
           postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
         };
+        packages.openfortivpn-webview = pkgs.callPackage ./openfortivpn-webview.nix {};
       }
     );
 }

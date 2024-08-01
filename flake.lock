@@ -34,31 +34,10 @@
         "type": "github"
       }
     },
-    "openfortivpn-webview": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1688979334,
-        "narHash": "sha256-zJNVCVy0gCrJTO3Ix7KT5mYaXv9tKRPG4OHFS9LabwM=",
-        "owner": "emilioziniades",
-        "repo": "openfortivpn-webview-flake",
-        "rev": "21d441193c002c1a80e361cf1784fe9c203266fd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "emilioziniades",
-        "repo": "openfortivpn-webview-flake",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "openfortivpn-webview": "openfortivpn-webview"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {
