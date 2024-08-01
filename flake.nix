@@ -14,26 +14,10 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        name = "vpn";
-        buildInputs = with pkgs; [
-          jq
-          openfortivpn
-          self.packages.${system}.openfortivpn-webview
-        ];
-        script = (pkgs.writeScriptBin name (builtins.readFile ./vpn.sh)).overrideAttrs (
-          old: {
-            buildCommand = "${old.buildCommand}\n patchShebangs $out";
-          }
-        );
       in rec {
-        packages.default = packages.script;
-        packages.script = pkgs.symlinkJoin {
-          name = name;
-          paths = [script] ++ buildInputs;
-          buildInputs = [pkgs.makeWrapper];
-          postBuild = "wrapProgram $out/bin/${name} --prefix PATH : $out/bin";
-        };
+        packages.script = pkgs.callPackage ./vpn.nix {openfortivpn-webview = packages.openfortivpn-webview;};
         packages.openfortivpn-webview = pkgs.callPackage ./openfortivpn-webview.nix {};
+        packages.default = packages.script;
       }
     );
 }
