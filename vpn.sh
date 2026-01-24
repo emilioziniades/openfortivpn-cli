@@ -48,11 +48,21 @@ up() {
         fi
         echo "connecting to $name"
         echo "$name" >$VPN_NAME_FILE
-        COOKIE=$(openfortivpn-webview "$host")
         if [ "$cert" = "null" ]; then
-            sudo -b openfortivpn --cookie="$COOKIE" "$host"
+            sudo -b openfortivpn "$host" --saml-login
         else
-            sudo -b openfortivpn --cookie="$COOKIE" "$host" --trusted-cert "$cert"
+            sudo -b openfortivpn "$host" --saml-login --trusted-cert "$cert"
+        fi
+
+        # have to open a new browser window for this
+        # window will close after completion of auth
+        url="https://$host/remote/saml/start?redirect=1"
+        if [[ $OSTYPE == 'linux'* ]]; then
+          xdg-open "$url"
+        elif [[ $OSTYPE == 'darwin'* ]]; then
+          open "$url"
+        else
+          echo "Please manually open $url"
         fi
     else
         echo "vpn already connected"
