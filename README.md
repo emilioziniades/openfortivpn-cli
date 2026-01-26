@@ -4,11 +4,11 @@ _CLI tool for connecting to Fortinet VPN via SAML login_
 
 ## Description
 
-This is a simple command line tool (read: bash script), which is a wrapper around [`openfortivpn`](https://github.com/adrienverge/openfortivpn) and [`openfortivpn-webview`](https://github.com/gm-vm/openfortivpn-webview).
+This is a simple command line tool (read: bash script), which is a wrapper around [`openfortivpn`](https://github.com/adrienverge/openfortivpn).
 
 I made it because I had to - it is used at $WORK.
 
-`openfortivpn` alone doesn't handle SAML login. So it is necessary to use `openfortivpn-webview` to get the cookie from the SAML login, and use that cookie when calling `openfortivpn`.
+`openfortivpn` can handle SAML login.
 
 ## Install
 

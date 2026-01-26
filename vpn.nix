@@ -4,7 +4,6 @@
   symlinkJoin,
   openfortivpn,
   jq,
-  openfortivpn-webview,
   ...
 }:
 symlinkJoin rec {
@@ -17,7 +16,6 @@ symlinkJoin rec {
   buildInputs = [
     jq
     openfortivpn
-    openfortivpn-webview
   ];
 
   nativeBuildInputs = [
